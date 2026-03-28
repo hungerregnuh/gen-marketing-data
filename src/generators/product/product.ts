@@ -1,9 +1,10 @@
-import { random } from 'lodash';
+import { random, round } from 'lodash';
 import { APP_CONFIG } from '../../app.config';
 import { randomUUID } from 'crypto';
 import { ProductType } from './product-type';
 import { generateNames } from '../../chat-handler';
 import { productNamePrompt } from '../../prompts/names';
+import { db } from '../../../seed';
 
 export interface Product {
   id: string;
@@ -32,18 +33,24 @@ export async function seedProducts(types: ProductType[]): Promise<Product[]> {
       productNamePrompt(numProducts, type.categoryName, type.name),
       numProducts
     );
-    console.log('Product names', productNames);
-    allProducts.push(
-      ...productNames.map((pn) => ({
+
+    for (let i = 0; i < productNames.length; i++) {
+      const product = {
         id: randomUUID(),
-        name: pn,
+        name: productNames[i],
         categoryId: type.categoryId,
         categoryName: type.categoryName,
         productTypeId: type.id,
         productTypeName: type.name,
-        price: random(type.minPrice, type.maxPrice, true),
-      }))
-    );
+        price: round(random(type.minPrice, type.maxPrice, true), 2),
+      };
+
+      allProducts.push(product);
+
+      await db.execute(`INSERT INTO product (id, category_id, category_name, product_type_id, product_type_name, name, price)
+VALUES ('${product.id}', '${product.categoryId}', '${product.categoryName}', '${product.productTypeId}', '${product.productTypeName}', '${product.name}', ${product.price});
+`);
+    }
   }
 
   return allProducts;

@@ -14,9 +14,9 @@ export const marketingCampaign = pgTable('marketing_campaign', {
   id: uuid().primaryKey(),
   parentCampaignId: uuid().references((): AnyPgColumn => marketingCampaign.id),
   name: text().notNull(),
-  budget: integer().default(-1).notNull(),
-  revenue: integer(),
-  netRevenue: integer(),
+  budget: decimal(),
+  revenue: decimal(),
+  netRevenue: decimal(),
   clicks: integer(),
   conversions: integer(),
   conversionRate: decimal(),
@@ -42,7 +42,7 @@ export const productCategory = pgTable('product_category', {
   id: uuid().primaryKey(),
   name: text().notNull(),
   productCount: integer(),
-  revenue: integer(),
+  revenue: decimal(),
   unitsSold: integer(),
 });
 
@@ -52,7 +52,7 @@ export const productType = pgTable('product_type', {
   categoryName: text(),
   name: text().notNull(),
   productCount: integer(),
-  revenue: integer(),
+  revenue: decimal(),
   unitsSold: integer(),
 });
 
@@ -63,16 +63,16 @@ export const product = pgTable('product', {
   productTypeId: uuid().references(() => productType.id),
   productTypeName: text(),
   name: text().notNull(),
-  price: integer(),
-  rating: integer(),
+  price: decimal(),
+  rating: decimal(),
 });
 
 export const productEngagement = pgTable('product_engagement', {
   id: uuid().primaryKey(),
   engagementDate: date().notNull(),
-  productRating: integer(),
+  productRating: decimal(),
   productReview: text(),
-  price: integer(),
+  price: decimal(),
   addedToCart: boolean().default(false).notNull(),
   impressionId: uuid().references(() => impressionTable.id),
 });
