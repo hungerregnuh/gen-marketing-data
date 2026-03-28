@@ -5,6 +5,7 @@
  * Learn more about the Seed Client by following our guide: https://docs.snaplet.dev/seed/getting-started
  */
 import { createSeedClient } from '@snaplet/seed';
+import { seedProductCategories } from './src/generators/product/product-category';
 
 const main = async () => {
   const seed = await createSeedClient();
@@ -12,6 +13,7 @@ const main = async () => {
   console.log('=== Generating Marketing data ===');
 
   console.log('Generating product categories and types');
+  const productCategories = await seedProductCategories();
 
   console.log('=== Finished generating Marketing data ===');
 
