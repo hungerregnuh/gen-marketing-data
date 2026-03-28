@@ -3,3 +3,4 @@ node_modules
 .chunkhound.json
 .chunkhound
 .pg-data
+**/.DS_Store
