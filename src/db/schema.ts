@@ -49,6 +49,7 @@ export const productCategory = pgTable('product_category', {
 export const productType = pgTable('product_type', {
   id: uuid().primaryKey(),
   categoryId: uuid().references(() => productCategory.id),
+  categoryName: text(),
   name: text().notNull(),
   productCount: integer(),
   revenue: integer(),
@@ -58,7 +59,9 @@ export const productType = pgTable('product_type', {
 export const product = pgTable('product', {
   id: uuid().primaryKey(),
   categoryId: uuid().references(() => productCategory.id),
-  typeId: uuid().references(() => productType.id),
+  categoryName: text(),
+  productTypeId: uuid().references(() => productType.id),
+  productTypeName: text(),
   name: text().notNull(),
   description: text().notNull(),
   price: integer(),
