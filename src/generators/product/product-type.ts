@@ -10,11 +10,14 @@ export interface ProductType {
   productCount?: number;
   revenue?: number;
   unitsSold?: number;
+  minPrice: number;
+  maxPrice: number;
 }
 
 export async function seedProductTypes(
   productCategories: ProductCategory[]
-): Promise<void> {
+): Promise<ProductType[]> {
+  const allTypes: ProductType[] = [];
   for (let i = 0; i < productCategories.length; i++) {
     const category = productCategories[i];
 
@@ -24,12 +27,15 @@ export async function seedProductTypes(
         categoryId: category.id,
         categoryName: category.name,
         name: category.type[j].name,
+        minPrice: category.type[j].minPrice,
+        maxPrice: category.type[j].maxPrice,
       };
 
       try {
         const result = await db.execute(`
           INSERT INTO product_type (id, category_id, category_name, name) VALUES ('${type.id}', '${category.id}', '${category.name}', '${type.name}');
         `);
+        allTypes.push(type);
       } catch (err) {
         console.error(
           'Unable to create product type',
@@ -42,4 +48,6 @@ export async function seedProductTypes(
       }
     }
   }
+
+  return allTypes;
 }

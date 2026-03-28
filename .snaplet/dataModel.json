@@ -386,10 +386,38 @@
           "maxLength": null
         },
         {
-          "id": "public.product.type_id",
-          "name": "type_id",
-          "columnName": "type_id",
+          "id": "public.product.category_name",
+          "name": "category_name",
+          "columnName": "category_name",
+          "type": "text",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.product.product_type_id",
+          "name": "product_type_id",
+          "columnName": "product_type_id",
           "type": "uuid",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.product.product_type_name",
+          "name": "product_type_name",
+          "columnName": "product_type_name",
+          "type": "text",
           "isRequired": false,
           "kind": "scalar",
           "isList": false,
@@ -403,20 +431,6 @@
           "id": "public.product.name",
           "name": "name",
           "columnName": "name",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
-        },
-        {
-          "id": "public.product.description",
-          "name": "description",
-          "columnName": "description",
           "type": "text",
           "isRequired": true,
           "kind": "scalar",
@@ -480,7 +494,7 @@
           "kind": "object",
           "relationName": "productToproduct_type",
           "relationFromFields": [
-            "type_id"
+            "product_type_id"
           ],
           "relationToFields": [
             "id"
@@ -786,6 +800,20 @@
           "name": "category_id",
           "columnName": "category_id",
           "type": "uuid",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.product_type.category_name",
+          "name": "category_name",
+          "columnName": "category_name",
+          "type": "text",
           "isRequired": false,
           "kind": "scalar",
           "isList": false,

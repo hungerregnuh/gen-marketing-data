@@ -2,6 +2,10 @@ import { createSeedClient } from '@snaplet/seed';
 import { seedProductCategories } from './src/generators/product/product-category';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { seedProductTypes } from './src/generators/product/product-type';
+import { loadEnvFile } from 'node:process';
+import { seedProducts } from './src/generators/product/product';
+
+loadEnvFile();
 
 export const db = drizzle({
   connection: {
@@ -22,8 +26,8 @@ const main = async () => {
 
   console.log('Generating product categories and types');
   const productCategories = await seedProductCategories();
-  await seedProductTypes(productCategories);
-  // await seedProducts(productCategories);
+  const allProductTypes = await seedProductTypes(productCategories);
+  const allProducts = await seedProducts(allProductTypes);
 
   console.log('=== Finished generating Marketing data ===');
 

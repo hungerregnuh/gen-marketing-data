@@ -5,22 +5,18 @@
 // }
 //
 
-const BASE_INSTRUCTIONS = `
-    Just give me names, there's no need to understand the target demographic or specifications.
-
-    Return the name(s) as a comma separated list, do not include new lines, do not include any other text.
+const BASE_INSTRUCTIONS = `Just give me names, there's no need to understand the target demographic or specifications.
+Return the name(s) as a comma separated list, do not include new lines, do not include any other text.
 `;
 
 export function productNamePrompt(
-  productCategory: string,
   nameCount: number,
+  productCategory: string,
   productType: string
 ): string {
-  return `
-        You're a product manufacturer creating ${productCategory}.
+  return `You're a product manufacturer creating ${productCategory}.
+Generate me ${nameCount} names for ${productType}.
 
-        Generate me ${nameCount} names for ${productType}.
-
-        ${BASE_INSTRUCTIONS}
-    `;
+${BASE_INSTRUCTIONS}
+`;
 }

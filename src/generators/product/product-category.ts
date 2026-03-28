@@ -1,5 +1,4 @@
 import { randomUUID } from 'crypto';
-import 'dotenv/config';
 import { PRODUCT_CATEGORIES } from '../../app.config';
 import { db } from '../../../seed';
 
@@ -9,10 +8,10 @@ export interface ProductCategory {
   productCount?: number;
   revenue?: number;
   unitsSold?: number;
-  type: ProductType[];
+  type: ProductTypeConfig[];
 }
 
-export interface ProductType {
+export interface ProductTypeConfig {
   name: string;
   minPrice: number;
   maxPrice: number;

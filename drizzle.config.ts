@@ -1,5 +1,7 @@
-import 'dotenv/config';
 import { defineConfig } from 'drizzle-kit';
+import { loadEnvFile } from 'node:process';
+
+loadEnvFile();
 
 // biome-ignore-all lint/style/noNonNullAssertion: No need to throw noNonNullAssertion lint error.
 export default defineConfig({

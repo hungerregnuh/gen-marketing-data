@@ -63,7 +63,6 @@ export const product = pgTable('product', {
   productTypeId: uuid().references(() => productType.id),
   productTypeName: text(),
   name: text().notNull(),
-  description: text().notNull(),
   price: integer(),
   rating: integer(),
 });
