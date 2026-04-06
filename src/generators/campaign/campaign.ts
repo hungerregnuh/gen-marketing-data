@@ -101,23 +101,23 @@ export async function seedMarketingData(
   const currentMonth = startOfMonth(subMonths(new Date(), 1));
 
   for (let i = 0; i < productTypes.length; i++) {
-    console.log(
-      'Creating campaign for',
-      productTypes[i].categoryName,
-      productTypes[i].name
-    );
     let currentCampaignDate = startDate;
-    const duration = random(
-      APP_CONFIG.minCampaignDuration,
-      APP_CONFIG.maxCampaignDuration,
-      false
-    );
 
     while (isBefore(currentCampaignDate, currentMonth)) {
+      const duration = random(
+        APP_CONFIG.minCampaignDuration,
+        APP_CONFIG.maxCampaignDuration,
+        false
+      );
+
       const campaignDateAdded = addMonths(currentCampaignDate, duration);
       const endDate = isAfter(campaignDateAdded, startOfMonth(currentMonth))
-        ? currentMonth
-        : campaignDateAdded;
+        ? campaignDateAdded
+        : currentMonth;
+
+      console.log(
+        `Creating campaign for ${productTypes[i].categoryName} (${productTypes[i].name}) for ${duration} months, starting ${currentCampaignDate} and ending ${endDate}`
+      );
       const campaign = await createMarketingCampaign(
         productTypes[i],
         currentCampaignDate,
