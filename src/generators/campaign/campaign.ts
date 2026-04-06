@@ -5,6 +5,8 @@ import { randomUUID } from 'node:crypto';
 import { isAfter, startOfMonth } from 'date-fns/fp';
 import { addMonths, endOfMonth, isBefore, subMonths } from 'date-fns';
 import { db } from '../../../seed';
+import { marketingCampaignNamePrompt } from '../../prompts/names';
+import { generateNames } from '../../chat-handler';
 
 export interface MarketingCampaign {
   id: string;
@@ -25,21 +27,28 @@ export interface MarketingCampaign {
   childCampaigns?: MarketingCampaign[];
 }
 
+const previousNames: string[] = [];
+
 // Sort of randomly pick whether or not a campaign should have children
 function shouldCampaignHaveChildren(): boolean {
   return random(0, 10, false) >= 3;
 }
 
-function genCampaign(
+async function genCampaign(
   type: ProductType,
   startDate: Date,
   endDate: Date,
   parentCampaignId?: string
-): MarketingCampaign {
+): Promise<MarketingCampaign> {
+  const campaignName = await generateNames(
+    marketingCampaignNamePrompt(type, previousNames),
+    1
+  );
+  previousNames.push(...campaignName);
   return {
     id: randomUUID(),
     parentCampaignId: parentCampaignId,
-    name: 'test', // gen name
+    name: campaignName[0],
     budget: random(100000, 1000000, false),
     productCategoryId: type.categoryId,
     productCategoryName: type.categoryName,
@@ -68,13 +77,17 @@ async function createMarketingCampaign(
   startDate: Date,
   endDate: Date
 ): Promise<MarketingCampaign> {
-  const campaign: MarketingCampaign = genCampaign(type, startDate, endDate);
+  const campaign: MarketingCampaign = await genCampaign(
+    type,
+    startDate,
+    endDate
+  );
   let childCampaignA: MarketingCampaign | null = null;
   let childCampaignB: MarketingCampaign | null = null;
 
   if (shouldCampaignHaveChildren()) {
-    childCampaignA = genCampaign(type, startDate, endDate, campaign.id);
-    childCampaignB = genCampaign(type, startDate, endDate, campaign.id);
+    childCampaignA = await genCampaign(type, startDate, endDate, campaign.id);
+    childCampaignB = await genCampaign(type, startDate, endDate, campaign.id);
 
     campaign.childCampaigns?.push(childCampaignA, childCampaignB);
     campaign.budget = childCampaignA.budget + childCampaignB.budget;
@@ -115,9 +128,9 @@ export async function seedMarketingData(
         ? campaignDateAdded
         : currentMonth;
 
-      console.log(
-        `Creating campaign for ${productTypes[i].categoryName} (${productTypes[i].name}) for ${duration} months, starting ${currentCampaignDate} and ending ${endDate}`
-      );
+      // console.log(
+      //   `Creating campaign for ${productTypes[i].categoryName} (${productTypes[i].name}) for ${duration} months, starting ${currentCampaignDate} and ending ${endDate}`
+      // );
       const campaign = await createMarketingCampaign(
         productTypes[i],
         currentCampaignDate,
