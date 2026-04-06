@@ -1,9 +1,17 @@
 export const APP_CONFIG = {
   maxConcurrentThreads: 4,
+
+  // Product
   minProductTypePerCategory: 6,
   maxProductTypePerCategory: 8,
   minSalesPerDayPerProductType: 2,
   maxSalesPerDayPerProductType: 5,
+
+  // Campaign
+  // Will go back 1 year from the current year and month.  So if today is 2026.04.15, then first campaign will start 2025.04.01
+  numberOfYears: 1,
+  minCampaignDuration: 1, // Duration in months
+  maxCampaignDuration: 9, // Duration in months
 };
 
 export const PRODUCT_CATEGORIES = [
@@ -22,20 +30,20 @@ export const PRODUCT_CATEGORIES = [
       // { name: 'Gaming Consoles', maxPrice: 700, minPrice: 250 },
     ],
   },
-  // {
-  //   name: 'Clothing',
-  //   type: [
-  //     { name: 'Sweaters', maxPrice: 450, minPrice: 30 },
-  //     { name: 'Pants', maxPrice: 300, minPrice: 25 },
-  //     { name: 'Shoes', maxPrice: 1200, minPrice: 40 },
-  //     { name: 'Jackets', maxPrice: 1500, minPrice: 60 },
-  //     { name: 'T-Shirts', maxPrice: 150, minPrice: 15 },
-  //     { name: 'Dresses', maxPrice: 2000, minPrice: 40 },
-  //     { name: 'Shorts', maxPrice: 120, minPrice: 20 },
-  //     { name: 'Socks', maxPrice: 40, minPrice: 5 },
-  //     { name: 'Underwear', maxPrice: 80, minPrice: 10 },
-  //   ],
-  // },
+  {
+    name: 'Clothing',
+    type: [
+      { name: 'Sweaters', maxPrice: 450, minPrice: 30 },
+      // { name: 'Pants', maxPrice: 300, minPrice: 25 },
+      // { name: 'Shoes', maxPrice: 1200, minPrice: 40 },
+      // { name: 'Jackets', maxPrice: 1500, minPrice: 60 },
+      // { name: 'T-Shirts', maxPrice: 150, minPrice: 15 },
+      // { name: 'Dresses', maxPrice: 2000, minPrice: 40 },
+      // { name: 'Shorts', maxPrice: 120, minPrice: 20 },
+      // { name: 'Socks', maxPrice: 40, minPrice: 5 },
+      // { name: 'Underwear', maxPrice: 80, minPrice: 10 },
+    ],
+  },
   // {
   //   name: 'Kitchenware',
   //   type: [

@@ -22,6 +22,7 @@ export async function seedProducts(types: ProductType[]): Promise<Product[]> {
 
   for (let j = 0; j < types.length; j++) {
     const type = types[j];
+    // TODO: uncomment this
     // const numProducts = random(
     //   APP_CONFIG.minProductTypePerCategory,
     //   APP_CONFIG.maxProductTypePerCategory,

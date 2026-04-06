@@ -1,5 +1,5 @@
+import type { AnyPgColumn } from 'drizzle-orm/pg-core';
 import {
-  AnyPgColumn,
   boolean,
   date,
   decimal,
@@ -28,6 +28,8 @@ export const marketingCampaign = pgTable('marketing_campaign', {
     .notNull()
     .references(() => productType.id),
   productTypeName: text(),
+  startDate: date(),
+  endDate: date(),
 });
 
 export const impressionTable = pgTable('impression', {

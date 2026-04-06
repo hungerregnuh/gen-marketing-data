@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "db:migrate": "drizzle-kit push"
+  },
   "devDependencies": {
     "@snaplet/copycat": "^6.0.0",
     "@snaplet/seed": "^0.98.0",
@@ -13,6 +16,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.75.0",
     "bcrypt": "^6.0.0",
+    "date-fns": "^4.1.0",
     "drizzle-orm": "^0.45.1",
     "lodash": "^4.17.21"
   }

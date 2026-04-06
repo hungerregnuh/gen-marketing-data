@@ -1,6 +1,9 @@
 import { SeedPg } from '@snaplet/seed/adapter-pg';
 import { defineConfig } from '@snaplet/seed/config';
+import { loadEnvFile } from 'node:process';
 import { Client } from 'pg';
+
+loadEnvFile();
 
 export default defineConfig({
   adapter: async () => {
