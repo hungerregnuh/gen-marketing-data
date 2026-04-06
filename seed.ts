@@ -22,7 +22,7 @@ export const db = drizzle({
 });
 
 const main = async () => {
-  const seed = await createSeedClient();
+  const seed: any = await createSeedClient();
   seed.$resetDatabase();
 
   const perfStartTime = performance.now();
